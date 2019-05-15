@@ -8,9 +8,54 @@
 <body>
   <div id="app">
     <v-app>
-      <v-content>
+      <!-- <v-content>
         <v-container>Hello world</v-container>
-      </v-content>
+      </v-content> -->
+      <v-layout>
+        <v-flex xs12 sm6 offset-sm3>
+          <v-card>
+            <v-img
+              class="white--text"
+              height="200px"
+              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            >
+              <v-container fill-height fluid>
+                <v-layout fill-height>
+                  <v-flex xs12 align-end flexbox>
+                    <span class="headline">Software de asignación de aulas</span>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-img>
+            <v-card-title>
+              <div style="width: 100%;">
+                <span class="headline mb-0">Iniciar Sesión</span><br>
+                <div>
+                  <v-form
+                  ref="form"
+                  v-model="valid"
+                  >
+                  <v-text-field
+                    v-model="usuario"
+                    label="Usuario"
+                    required
+                  ></v-text-field>
+              
+                  <v-text-field
+                    v-model="contrasena"
+                    label="Contraseña"
+                    required
+                  ></v-text-field>
+                </v-form>
+                </div>
+              </div>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn flat color="orange">Iniciar Sesión</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </v-app>
   </div>
 
