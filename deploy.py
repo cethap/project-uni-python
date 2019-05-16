@@ -17,7 +17,7 @@ def do_admin_login():
     session['logged_in'] = True
   else:
     flash('wrong password!')
-  return redirect('/')
+  return index('/')
 
 @app.route('/user/<name>')
 def user(name):
