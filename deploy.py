@@ -12,12 +12,12 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def do_admin_login():
-  return request.form['password']
-  # if request.form['password'] == 'password' and request.form['username'] == 'admin':
-  #   session['logged_in'] = True
-  # else:
-  #   flash('wrong password!')
-  # return index()
+  if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    session['logged_in'] = True
+  else:
+    return "kkkkkkk"
+    # flash('wrong password!')
+  return index()
 
 @app.route('/user/<name>')
 def user(name):
