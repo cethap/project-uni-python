@@ -11,9 +11,46 @@
     <v-app>
       <v-layout>
         <v-flex xs12 sm10 offset-sm1>
-          <v-content>
+          <v-content v-if="edit">
+            <br>
+            <br>
+              <v-card>
+                  <v-card-title>
+                    <div style="width: 100%;">
+                      <span class="headline mb-0">!{editTitle}</span><br>
+                      <div>
+                        <v-form
+                        ref="form"
+                        >
+                        <v-text-field
+                          v-model="def.name"
+                          required
+                        ></v-text-field>
+                    
+                        <v-text-field
+                          v-model="def.ubicacion"
+                          required
+                        ></v-text-field>
+
+                        <v-text-field
+                          v-model="def.numequipos"
+                          required
+                        ></v-text-field>
+                      </v-form>
+                      </div>
+                    </div>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn flat color="orange" v-on:click="save">Guardar</v-btn>
+                  </v-card-actions>
+              </v-card>
+          </v-content>
+          <v-content v-if="!edit">
             <br>
             <h2>Salones censados</h2>
+            <br>
+            Añadir censo <v-btn fab small v-on:click="add"> <v-icon dark>add</v-icon> </v-btn>
+            <br>
             <br>
             <v-data-table
             :headers="headers"
@@ -21,6 +58,10 @@
             class="elevation-1"
             >
               <template v-slot:items="props">
+                <td>
+                    <v-btn fab small v-on:click="editItem(props.item)"> <v-icon dark>edit</v-icon> </v-btn>
+                    <v-btn fab small v-on:click="removeItem(props.index)"> <v-icon dark>remove</v-icon> </v-btn>
+                </td>
                 <td>!{ props.item.name }</td>
                 <td class="text-xs-right">!{ props.item.ubicacion }</td>
                 <td class="text-xs-right">!{ props.item.numequipos }</td>
@@ -39,14 +80,19 @@
       el: '#app',
       delimiters: ['!{', '}'],
       data: {
+        edit: false,
+        mod: '',
+        editTitle: '',
+        def: {
+          name : '',
+          ubicacion : '',
+          numequipos : '',
+        },
         headers: [
-          {
-            text: 'Nombre',
-            align: 'center',
-            value: 'name'
-          },
-          { text: 'Ubicación', value: 'ubicacion', align: 'center', },
-          { text: 'Cantidad de equipos', value: 'numequipos', align: 'center', },
+          { text: 'Acciones', align: 'center', value: '', sortable: false },
+          { text: 'Nombre', align: 'center', value: 'name', sortable: false },
+          { text: 'Ubicación', value: 'ubicacion', align: 'center', sortable: false },
+          { text: 'Cantidad de equipos', value: 'numequipos', align: 'center', sortable: false },
         ],
         desserts: [
           {
@@ -95,7 +141,36 @@
             numequipos: 28
           },
         ]
-      }
+      },
+        methods: {
+          editItem: function (data) {
+            this.edit = true;
+            this.def = data;
+            this.mod = 'edit';
+            this.editTitle = 'Editar censo';
+          },
+          save: function (data) {
+            if(this.mod === 'edit'){
+              this.edit = false;
+            }else{
+              this.desserts.unshift(this.def);
+              this.edit = false;
+            }
+          },
+          removeItem: function (index) {
+            this.desserts.splice(index, 1);
+          },
+          add: function () {
+            this.edit = true;
+            this.editTitle = 'Crear censo';
+            this.mod = 'new';
+            this.def = {
+              name: '',
+              ubicacion: '',
+              numequipos: ''
+            };
+          },
+        }
     })
   </script>
 </body>
