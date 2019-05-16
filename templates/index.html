@@ -4,49 +4,29 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>Salas Sensadas</title>
 </head>
 <body>
   <div id="app">
     <v-app>
-      <!-- <v-content>
-        <v-container>Hello world</v-container>
-      </v-content> -->
       <v-layout>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card>
-            <v-img
-              class="white--text"
-              height="200px"
-              src="/static/logo.jpg"
+        <v-flex xs12 sm10 offset-sm1>
+          <v-content>
+            <br>
+            <h2>Salones censados</h2>
+            <br>
+            <v-data-table
+            :headers="headers"
+            :items="desserts"
+            class="elevation-1"
             >
-            </v-img>
-            <v-card-title>
-              <div style="width: 100%;">
-                <span class="headline mb-0">Iniciar Sesión</span><br>
-                <div>
-                  <v-form
-                  ref="form"
-                  v-model="valid"
-                  >
-                  <v-text-field
-                    v-model="usuario"
-                    label="Usuario"
-                    required
-                  ></v-text-field>
-              
-                  <v-text-field
-                    v-model="contrasena"
-                    label="Contraseña"
-                    required
-                  ></v-text-field>
-                </v-form>
-                </div>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat color="orange">Iniciar Sesión</v-btn>
-            </v-card-actions>
-          </v-card>
+              <template v-slot:items="props">
+                <td>!{ props.item.name }</td>
+                <td class="text-xs-right">!{ props.item.ubicacion }</td>
+                <td class="text-xs-right">!{ props.item.numequipos }</td>
+              </template>
+            </v-data-table>
+          </v-content>
         </v-flex>
       </v-layout>
     </v-app>
@@ -55,7 +35,68 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
   <script>
-    new Vue({ el: '#app' })
+    new Vue({ 
+      el: '#app',
+      delimiters: ['!{', '}'],
+      data: {
+        headers: [
+          {
+            text: 'Nombre',
+            align: 'center',
+            value: 'name'
+          },
+          { text: 'Ubicación', value: 'ubicacion', align: 'center', },
+          { text: 'Cantidad de equipos', value: 'numequipos', align: 'center', },
+        ],
+        desserts: [
+          {
+            name: 'Sala 301',
+            ubicacion: 'Bloque 1',
+            numequipos: 30
+          },
+          {
+            name: 'Sala 302',
+            ubicacion: 'Bloque 1',
+            numequipos: 10
+          },
+          {
+            name: 'Sala 301',
+            ubicacion: 'Bloque 2',
+            numequipos: 20
+          },
+          {
+            name: 'Sala 300',
+            ubicacion: 'Bloque 1',
+            numequipos: 35
+          },
+          {
+            name: 'Sala 301',
+            ubicacion: 'Bloque 5',
+            numequipos: 40
+          },
+          {
+            name: 'Sala 259',
+            ubicacion: 'Bloque 3',
+            numequipos: 32
+          },
+          {
+            name: 'Sala 301',
+            ubicacion: 'Bloque 4',
+            numequipos: 31
+          },
+          {
+            name: 'Sala 304',
+            ubicacion: 'Bloque 1',
+            numequipos: 25
+          },
+          {
+            name: 'Sala 306',
+            ubicacion: 'Bloque 1',
+            numequipos: 28
+          },
+        ]
+      }
+    })
   </script>
 </body>
 </html>

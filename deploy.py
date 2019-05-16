@@ -1,14 +1,28 @@
-from flask import Flask, render_template
+from flask import Flask, flash, redirect, render_template, request, session, abort
+import os
 
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  if not session.get('logged_in'):
+    return render_template('login.html')
+  else:
+    return render_template('index.html')
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+  print(request.form)
+  if request.form['password'] == 'password' and request.form['username'] == 'admin':
+    session['logged_in'] = True
+  else:
+    flash('wrong password!')
+  return redirect('/')
 
 @app.route('/user/<name>')
 def user(name):
     return render_template('user.html', name=name)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.secret_key = os.urandom(12)
+    app.run(debug=True,host='0.0.0.0', port=4000)
