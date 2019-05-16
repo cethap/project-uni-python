@@ -15,14 +15,14 @@ def do_admin_login():
   if request.form['password'] == 'password' and request.form['username'] == 'admin':
     session['logged_in'] = True
   else:
-    return "kkkkkkk"
-    # flash('wrong password!')
-  return index()
+    flash('wrong password!')
+  return redirect('/')
 
 @app.route('/user/<name>')
 def user(name):
     return render_template('user.html', name=name)
 
+app.secret_key = os.urandom(12)
+
 if __name__ == '__main__':
-    app.secret_key = os.urandom(12)
     app.run(debug=True)
